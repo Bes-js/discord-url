@@ -1,0 +1,49 @@
+{
+  "name": "discord-url",
+  "version": "7.0.0",
+  "description": "Discord server vanity URL management tool.",
+  "main": "index.js",
+  "typings": "typings/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "nodejs",
+    "esm",
+    "es6",
+    "typescript",
+    "ts",
+    "commonjs",
+    "constructor",
+    "configuration",
+    "v13",
+    "v14",
+    "easy",
+    "discord-vanity",
+    "vanity",
+    "vanity-url",
+    "url",
+    "discord-url",
+    "discord-api",
+    "api"
+  ],
+  "author": "Bes-js",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bes-js/discord-url.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bes-js/discord-url"
+  },
+  "homepage": "https://discord.gg/luppux",
+  "dependencies": {
+    "events": "^3.3.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

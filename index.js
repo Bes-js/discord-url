@@ -1,3 +1,6 @@
+const { VanityClient, VanityEvents } = require('./client');
+
 module.exports = {
-    VanityClient: require('./client')
-}
+   VanityClient,
+   VanityEvents
+};

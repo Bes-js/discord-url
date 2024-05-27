@@ -2,20 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const request = require('request');
-var EventEmitter = require('events')
+var EventEmitter = require('events');
+
+const VanityEvents = {
+    VanitySuccess: 'VanitySuccess',
+    VanityError: 'VanityError'
+};
 
 class VanityClient extends EventEmitter {
-    constructor({selfToken,guildId,ws:{version},betterLog = true}) {
+    constructor({selfToken, guildId, api = { version: 10 }, betterLog = true } = {}) {
         super();
-        if (!token) throw new SyntaxError("Please Specify a Self Token!");
+        if (!selfToken) throw new SyntaxError("Please Specify a Self Token!");
         this.token = selfToken;
         this.guildID = guildId;
-        this.log = betterLog;
-        this.version = version;
+        this.log = betterLog || true;
+        console.log(this.log);
+        this.version = api.version || { version: 10 };
         this.VanityClient = new EventEmitter();
 
-        if(typeof log !== "boolean") throw new SyntaxError("Log Must Be True or False!");
-        if (log == true) {
+        if(typeof this.log !== "boolean") throw new SyntaxError("Log Must Be True or False!");
+        if (this.log == true) {
             console.log("\n");
             console.log("\x1b[31m%s\x1b[0m", "▓█████▄  ██▓  ██████  ▄████▄   ▒█████   ██▀███  ▓█████▄     █    ██  ██▀███   ██▓    ")
             console.log("\x1b[31m%s\x1b[0m", "▒██▀ ██▌▓██▒▒██    ▒ ▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▒██▀ ██▌    ██  ▓██▒▓██ ▒ ██▒▓██▒    ");
@@ -50,10 +56,10 @@ class VanityClient extends EventEmitter {
           json: payload
           }, (error, response, body) => {
           if (response.statusCode == 200) {
-          this.emit('VanitySuccess',{ statusCode: 200, vanityURLCode: url, guildId: this.guildID })
+          this.emit(VanityEvents.VanitySuccess,{ statusCode: 200, vanityURLCode: url, guildId: this.guildID })
           return true;
           } else {
-          this.emit('VanityError', { statusCode: response.statusCode, errorMessage: response.body.message, guildId: this.guildID });
+          this.emit(VanityEvents.VanityError, { statusCode: response.statusCode, errorMessage: response.body.message, guildId: this.guildID });
           return false;
           }
         });
@@ -63,4 +69,4 @@ class VanityClient extends EventEmitter {
 
 }
 
-module.exports = VanityClient;
+module.exports = { VanityClient, VanityEvents };

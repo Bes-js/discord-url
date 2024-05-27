@@ -1,6 +1,6 @@
 {
   "name": "discord-url",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Discord server vanity URL management tool.",
   "main": "index.js",
   "typings": "typings/index.d.ts",

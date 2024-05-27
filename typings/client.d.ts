@@ -2,6 +2,17 @@ import { EventEmitter } from "events";
 
 type EventTypes = 'VanitySuccess' | 'VanityError';
 
+interface APIOptions {
+    version?: 8 | 9 | 10;
+}
+
+interface VanityClientOptions {
+    selfToken: string;
+    guildId: string;
+    betterLog?: boolean;
+    api?: APIOptions;
+}
+
 
 export enum VanityEvents {
     VanitySuccess = 'VanitySuccess',
@@ -10,14 +21,14 @@ export enum VanityEvents {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface VanityEventPayloads {
-    [VanityEvents.VanitySuccess]: [{ statusCode: number, vanityURLCode: string | null, guildId: string }];
-    [VanityEvents.VanityError]: [{ statusCode: number, errorMessage: string, guildId: string }];
+    [VanityEvents.VanitySuccess]: { statusCode: number, vanityURLCode: string | null, guildId: string };
+    [VanityEvents.VanityError]: { statusCode: number, errorMessage: string, guildId: string };
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface VanityClientEmitter {
-    on<K extends keyof VanityEventPayloads>(event: K, listener: (...args: VanityEventPayloads[K]) => void): this;
-    emit<K extends keyof VanityEventPayloads>(event: K, ...args: VanityEventPayloads[K]): boolean;
+    on<K extends keyof VanityEventPayloads|EventTypes>(event: K, listener: (payload: VanityEventPayloads[K]) => void): this;
+    emit<K extends keyof VanityEventPayloads>(event: K, payload: VanityEventPayloads[K]): boolean;
 }
 
 /**
@@ -38,7 +49,7 @@ interface VanityClientEmitter {
  * });
  */
 export declare class VanityClient extends (EventEmitter as { new(): VanityClientEmitter }) implements VanityClientEmitter {
-    constructor(options: { selfToken: string, guildId: string, betterLog?: boolean | true, api?: { version?: 8 | 9 | 10 } });
+    constructor(options: VanityClientOptions);
 
     /**
      * Set the vanity url for the guild
